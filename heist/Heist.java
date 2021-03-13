@@ -12,41 +12,21 @@ public class Heist {
 		try(var reader = new BufferedReader(new InputStreamReader(System.in))) {
 			
 			var remain = Integer.parseInt(reader.readLine());
-			String[] keyboardsStr = reader.readLine().split(SPACE);
+			String[] keyboards = reader.readLine().split(SPACE);
 			
-			int length = keyboardsStr.length;
-			var keyboards = new Integer[length];
+			int min = Integer.parseInt(keyboards[0]);
+			int max = min;
 
-			for(int i = 0; i < length; i++) {
-				keyboards[i] = Integer.parseInt(keyboardsStr[i]);
+			for(int i = 1; i < keyboards.length; i++) {
+				var inventoryNumber = Integer.parseInt(keyboards[i]);
+				max = inventoryNumber > max ? inventoryNumber : max;
+				min = inventoryNumber < min ? inventoryNumber : min;
 			}
 
-			sort(keyboards);
-
-			var size = keyboards[length - 1] - keyboards[0] + 1;
-
-			System.out.println(size - remain);	
+			System.out.println(max - min + 1 - remain);	
 
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
-	}
-
-
-	private static void swap(Integer[] arr, int from, int to) {
-		var temp = arr[from];
-		arr[from] = arr[to];
-		arr[to] = temp;
-	}
-
-	private static void sort(Integer[] arr) {
-
-		for(int i = 1; i < arr.length; i++) {
-			for(int j = i; j >= 0; j--) {
-				if(j > 0 && arr[j] < arr[j - 1]) {
-					swap(arr, j, j - 1);
-				}
-			}
 		}
 	}
 }
